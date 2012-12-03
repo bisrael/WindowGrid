@@ -1,0 +1,37 @@
+<html>
+<head>
+    <script src="js/utilities.js"></script>
+    <script type="text/javascript">
+    function getColumns() {
+        return localStorage.getItem("columns");
+    }
+    function getRows() {
+        return localStorage.getItem("rows");
+    }
+    function setColumns(n) {
+        return localStorage.setItem("columns", n);
+    }
+    function setRows(n) {
+        return localStorage.setItem("rows", n);
+    }
+    
+    function slotWindow(id, cols, rows, dims) {
+        setColumns(cols);
+        setRows(rows);
+        
+        // Dimensions must be ints or chrome dies.
+        var keys = Object.getOwnPropertyNames(dims);
+        for(var i = 0; i < keys.length; ++i) {
+            var prop = keys[i];
+            if(typeof dims[prop] != "number") continue;
+            dims[prop] = Math.round(dims[prop]);
+        }
+        
+        dims.focused = true;
+        chrome.windows.update(id, dims);
+    }
+    
+    </script>
+</head>
+<body></body>
+</html>
